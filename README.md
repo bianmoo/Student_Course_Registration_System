@@ -74,4 +74,5 @@ erDiagram
     COURSES  ||--o{ TEACHES : is_taught_by
     DEPARTMENTS ||--o{ PROFESSORS : houses
     DEPARTMENTS ||--o{ COURSES : offers
+
 ```
