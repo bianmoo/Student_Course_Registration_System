@@ -1,7 +1,14 @@
 # Student_Course_Registration_System
 ### Description
-A mini SQL project demonstrating relational schema design, data modeling, and multi-table querying. This project models a simplified university course registration system.
+A lightweight SQL project demonstrating relational schema design, data modeling, and multi-table querying. This project models a simplified university course registration system.
 ### Overview
+This project showcases core SQL skills required for entry-level data, software, and IT roles. The database simulates a realistic university environment and demonstrates:  
+• Creating normalised relational tables.  
+• Designing primary and foreign key relationships.  
+• Using many-to-many linking tables (Enrollments, Teaches).  
+• Writing multi-table JOIN queries.  
+• Using aggregations, grouping, filtering, and subqueries.  
+• Analysing student performance, professor activity, and department-level data.  
 
 ### Schema
 ##### Students 
@@ -23,56 +30,42 @@ Columns: professor_id, course_id
 Stores department metadata.  
 Columns: department_id, department_name, office_location
 ##### ERD
-```mermaid
-erDiagram
-    STUDENTS {
-        INT student_id PK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR email UNIQUE
-        VARCHAR major
-        INT enrollment_year
-    }
-
-    PROFESSORS {
-        INT professor_id PK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR department
-    }
-
-    DEPARTMENTS {
-        INT department_id PK
-        VARCHAR department_name UNIQUE
-        VARCHAR office_location
-    }
-
-    COURSES {
-        INT course_id PK
-        VARCHAR course_name
-        VARCHAR department
-        INT credits
-    }
-
-    ENROLLMENTS {
-        INT enrollment_id PK
-        INT student_id FK
-        INT course_id FK
-        VARCHAR semester
-        VARCHAR grade
-    }
-
-    TEACHES {
-        INT professor_id FK
-        INT course_id FK
-    }
-
-    %% Relationships
-    STUDENTS ||--o{ ENROLLMENTS : enrolls
-    COURSES  ||--o{ ENROLLMENTS : has
-    PROFESSORS ||--o{ TEACHES : teaches
-    COURSES  ||--o{ TEACHES : is_taught_by
-    DEPARTMENTS ||--o{ PROFESSORS : houses
-    DEPARTMENTS ||--o{ COURSES : offers
-
+```markdown
+Students ---< Enrollments >--- Courses ---< Teaches >--- Professors
+                  ^                 |
+                  |                 v
+             Departments <------ Courses.department
 ```
+### Usage
+##### 1. Create the database in an SQL client: 
+```
+CREATE DATABASE university_db;
+USE university_db;
+```  
+##### 2. Run the schema: 
+```
+mysql -u root -p university_db < schema.sql
+```
+##### 3. Insert sample data:
+```
+mysql -u root -p university_db < seed.sql
+```
+##### 4. Execute the example queries:
+```
+mysql -u root -p university_db < queries.sql
+```
+##### (Optional) Enter SQL shell to execute custom queries:
+```
+mysql -u root -p university_db
+```
+### Example queries
+• Show the number of students enrolled per course.  
+• Show the number of courses each professor teaches.  
+• Show the most common grade per course.  
+• Show the number of students taught by each professor.  
+• Show the number of courses that have more than 2 students enrolled.   
+### Files
+schema.sql - Creates all tables and foreign keys.  
+seed.sql - Inserts data.  
+queries.sql - practice SQL queries.      
+
